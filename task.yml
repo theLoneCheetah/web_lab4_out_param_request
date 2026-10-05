@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  title: Lab 4
+  version: 1.0.0
+servers:
+- url: https://d5d6i3deiop3adllah9t.l5v6loqa.apigw.yandexcloud.net
+paths:
+  /login:
+    get:
+      summary: Return login
+      operationId: getLogin
+      responses:
+        '200':
+          description: Login string
+          content:
+            text/plain:
+              schema:
+                type: string
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: text/plain
+        content:
+          'text/plain': 'thelonecheetah'
+
+  /id/{N}:
+    get:
+      summary: Get user login by ID
+      operationId: getUserId
+      parameters:
+        # Обязательный параметр N, не обязательно число
+        - name: N
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User login
+          content:
+            text/plain:
+              schema:
+                type: string
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: d4e6qvecvct7hv5dpuio
